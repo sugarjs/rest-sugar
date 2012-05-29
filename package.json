@@ -4,7 +4,10 @@
     "author": "Juho Vepsalainen <bebraw@gmail.com>",
     "version": "0.1.0",
 
-    "dependencies": {},
+    "dependencies": {
+        "express": "== 2.5.9",
+        "funkit": "== 0.1.9"
+    },
 
     "main": "./lib/rest-sugar.js",
 
