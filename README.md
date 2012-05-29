@@ -9,7 +9,7 @@ Even though the library has been designed based on Express, it might be
 possible to make it work with other similar libraries too given they use
 Express conventions. This might take some kind of an adapter.
 
-See demo.js to see how the architecture works out. Note that as it does
+See demo to see how the architecture works out. Note that as it does
 not use mongoose-sugar it is a bit lengthy. It should give you some idea
 how to implement components that fit the whole, though.
 

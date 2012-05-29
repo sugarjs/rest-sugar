@@ -5,7 +5,6 @@
     "version": "0.1.0",
 
     "dependencies": {
-        "express": "== 2.5.9",
         "funkit": "== 0.1.9"
     },
 

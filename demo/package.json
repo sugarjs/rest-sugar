@@ -1,0 +1,11 @@
+{
+    "name": "rest-sugar-demo",
+    "private": true,
+    "description": "rest-sugar demo",
+    "author": "Juho Vepsalainen <bebraw@gmail.com>",
+    "version": "0.1.0",
+
+    "dependencies": {
+        "express": "== 2.5.9"
+    }
+}
