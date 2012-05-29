@@ -1,0 +1,28 @@
+{
+    "name": "rest-sugar",
+    "description": "rest-sugar makes it easy to implement yummy REST APIs",
+    "author": "Juho Vepsalainen <bebraw@gmail.com>",
+    "version": "0.1.0",
+
+    "dependencies": {},
+
+    "main": "./lib/rest-sugar.js",
+
+    "repository": {
+        "type": "git",
+        "url": "https://bebraw@github.com/bebraw/rest-sugar.git"
+    },
+
+    "homepage": "https://github.com/bebraw/rest-sugar",
+
+    "bugs": {
+        "url": "https://github.com/bebraw/rest-sugar/issues"
+    },
+
+    "keywords": ["rest"],
+
+    "licenses": [{
+        "type": "MIT",
+        "url": "https://github.com/bebraw/rest-sugar/blob/master/LICENSE"
+    }]
+}
