@@ -17,24 +17,24 @@ how to implement components that fit the whole, though.
 
 The following urls contain a prefix given at init.
 
-* GET /? (ie. /api/v1) -> API metadata (ie. schema and help)
-* GET /<api> -> Get all
-* GET /<api>?name=foobar -> Get all with the matching name
-* GET /<api>?limit=25&offset=50 -> Get with pagination
-* GET /<api>/count -> Get count
-* GET /<api>?fields=name,color -> Get name and color fields only
-* POST /<api>?name=foobar -> Create new item with the given name
-* PUT /<api> -> Disallowed, gives 403 error
-* DELETE /<api> -> Disallowed, gives 403 error
+* GET /? (ie. /api/v1) -&gt; API metadata (ie. schema and help)
+* GET /&lt;api&gt; -&gt; Get all
+* GET /&lt;api&gt;?name=foobar -&gt; Get all with the matching name
+* GET /&lt;api&gt;?limit=25&offset=50 -&gt; Get with pagination
+* GET /&lt;api&gt;/count -&gt; Get count
+* GET /&lt;api&gt;?fields=name,color -&gt; Get name and color fields only
+* POST /&lt;api&gt;?name=foobar -&gt; Create new item with the given name
+* PUT /&lt;api&gt; -&gt; Disallowed, gives 403 error
+* DELETE /&lt;api&gt; -&gt; Disallowed, gives 403 error
 
 Note that it is possible to mix and match various GETs above. The following
-urls operate on a specific resource (ie. /<api>/<id>).
+urls operate on a specific resource (ie. /&lt;api&gt;/&lt;id&gt;).
 
-* GET /<api>/<id> -> Get resource matching to the id
-* POST /<api>/<id> -> Disallowed, gives 403 error
-* PUT /<api>/<id>?name=joe -> Updates the content of the given resource with
+* GET /&lt;api&gt;/&lt;id&gt; -&gt; Get resource matching to the id
+* POST /&lt;api&gt;/&lt;id&gt; -&gt; Disallowed, gives 403 error
+* PUT /&lt;api&gt;/&lt;id&gt;?name=joe -&gt; Updates the content of the given resource with
   the given field data
-* DELETE /<api>/<id> -> Deletes the given resource. Returns an empty structure
+* DELETE /&lt;api&gt;/&lt;id&gt; -&gt; Deletes the given resource. Returns an empty structure
   if successful.
 
 It is possible to emulate POST, PUT and DELETE via GET by using a query (ie.
