@@ -13,18 +13,13 @@ function main() {
         app.use(app.router);
     });
 
-    initAPI(app);
-
-    console.log('Surf to localhost:8000');
-    app.listen(8000);
-}
-
-// our API (basic CRUD + count + meta)
-function initAPI(app) {
     rest.init(app, '/api/v1/', {
         'libraries': libraries(),
         'tags': tags()
     }, queries());
+
+    console.log('Surf to localhost:8000');
+    app.listen(8000);
 }
 
 // some schema (could use actual db here!). mongoose-sugar works nicely too
