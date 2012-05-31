@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var express = require('express');
-var rest = require('../lib/rest-sugar');
+var rest = require('../../lib/rest-sugar');
 
 main();
 
