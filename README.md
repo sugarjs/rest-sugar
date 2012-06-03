@@ -13,6 +13,10 @@ See the demos to see how the architecture works out. Note that as it does
 not use mongoose-sugar it is a bit lengthy. It should give you some idea
 how to implement components that fit the whole, though.
 
+Inspired by [RESTful API Design - Second
+Edition](http://www.slideshare.net/apigee/restful-api-design-second-edition)
+and [django-tastypie](https://github.com/toastdriven/django-tastypie).
+
 ## Features
 
 The following urls contain a prefix given at init.
