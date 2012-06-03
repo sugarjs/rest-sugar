@@ -2,6 +2,13 @@
 var express = require('express');
 var rest = require('../../lib/rest-sugar');
 
+// IMPORTANT! Do not store this in repo on production
+// In order to deal with this, define a separate module (ie. config.js) that
+// does not go to the repo and load it from there. Or alternatively just stash
+// it to your environment (ie. process.env.APIKEY). You can also combine these
+// approaches.
+var APIKEY = 'dummy';
+
 main();
 
 function main() {
@@ -16,7 +23,7 @@ function main() {
     rest.init(app, '/api/v1/', {
         'libraries': libraries(),
         'tags': tags()
-    }, queries());
+    }, queries(), rest.auth.key('apikey', APIKEY));
 
     console.log('Surf to localhost:8000');
     app.listen(8000);
