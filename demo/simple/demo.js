@@ -46,34 +46,34 @@ function tags() {
 // queries that operate on the schema. mongoose-sugar does this too
 function queries() {
     return {
-        create: function(model, data, okCb, errCb) {
+        create: function(model, data, cb) {
             model.push(data); // might want to validate now
-            okCb(model[model.length - 1]);
+            cb(null, model[model.length - 1]);
         },
-        getAll: function(model, query, okCb, errCb) {
-            okCb(model);
+        getAll: function(model, query, cb) {
+            cb(null, model);
         },
-        get: function(model, id, fields, okCb, errCb) {
+        get: function(model, id, fields, cb) {
             id = parseInt(id, 10);
-            if(0 <= id && id < model.length) okCb(model[id]);
-            else errCb('not found');
+            if(0 <= id && id < model.length) cb(null, model[id]);
+            else cb('not found');
         },
-        update: function(model, id, data, okCb, errCb) {
+        update: function(model, id, data, cb) {
             id = parseInt(id, 10);
             if(0 <= id && id < model.length) {
                 for(var k in data) model[id][k] = data[k];
-                okCb(model[id]);
+                cb(null, model[id]);
             }
-            else errCb('not updated');
+            else cb('not updated');
         },
-        'delete': function(model, id, okCb, errCb) {
+        'delete': function(model, id, cb) {
             var a = model.splice(id, 1);
 
-            if(a) okCb({});
-            else errCb('not deleted');
+            if(a) cb(null, {});
+            else cb('not deleted');
         },
-        count: function(model, okCb, errCb) {
-            okCb(model.length);
+        count: function(model, okCb, cb) {
+            cb(null, model.length);
         },
         getMeta: function(model) {
             return model.meta;
