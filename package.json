@@ -5,7 +5,8 @@
     "version": "0.2.5",
 
     "dependencies": {
-        "funkit": "== 0.1.9"
+        "funkit": "== 0.7.2",
+        "is-js": "== 0.1.1"
     },
 
     "main": "./lib/rest-sugar.js",
