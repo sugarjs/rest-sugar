@@ -2,7 +2,7 @@
     "name": "rest-sugar",
     "description": "rest-sugar makes it easy to implement yummy REST APIs",
     "author": "Juho Vepsalainen <bebraw@gmail.com>",
-    "version": "0.2.8",
+    "version": "0.2.9",
 
     "dependencies": {
         "funkit": "== 0.7.2",
