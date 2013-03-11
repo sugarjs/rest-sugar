@@ -4,7 +4,7 @@ var async = require('async');
 var utils = require('./utils');
 
 // TODO: load these dynamically based on prefix
-var testAuth = require('./test_auth');
+var testMiddleware = require('./test_middleware');
 var testRest = require('./test_rest');
 
 
@@ -14,7 +14,7 @@ function main() {
     utils.start();
 
     async.series([
-        testAuth,
+        testMiddleware,
         testRest
     ], utils.finish);
 }

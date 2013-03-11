@@ -18,6 +18,7 @@ function tests(done) {
     }, sugar);
 
     api.pre(function() {
+        api.use(api.only('GET'));
         api.use(function(req, res, next) {
             next();
         });
