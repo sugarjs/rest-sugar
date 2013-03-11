@@ -219,8 +219,21 @@ function removeResource(r) {
 
 function removeResourceViaGet(r) {
     return function(cb) {
-        // TODO
-        cb();
+        createResource(r)(function(err, d, body) {
+            var id = body._id;
+
+            request.get({url: r, qs: {_id: id}, method: 'delete'}, function(err, d, body) {
+                if(err) return console.error(err);
+
+                request.get({url: r + '/count', json: true}, function(err, d, body) {
+                    if(err) return console.error(err);
+
+                    assert.equal(body, 0);
+
+                    cb(err, d, body);
+                });
+            });
+        });
     };
 }
 
