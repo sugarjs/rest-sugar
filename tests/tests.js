@@ -145,8 +145,19 @@ function createResourceViaId(r) {
 
 function updateResource(r) {
     return function(cb) {
-        // TODO
-        cb();
+        createResource(r)(function(err, d, body) {
+            var id = body._id;
+            var name = body.name + body.name;
+
+            request.put({url: r, json: {_id: id, name: name}}, function(err, d, body) {
+                if(err) return console.error(err);
+
+                assert.equal(id, body._id);
+                assert.equal(name, body.name);
+
+                cb(err, d, body);
+            });
+        });
     };
 }
 
