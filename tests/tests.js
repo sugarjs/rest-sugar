@@ -81,15 +81,23 @@ function getResource(r) {
 
             assert.equal(body.length, 0);
 
-            cb();
+            cb(err, d, body);
         });
     };
 }
 
 function getResourceViaId(r) {
     return function(cb) {
-        // TODO
-        cb();
+        createResource(r)(function(err, d, body) {
+            request.get({url: r + '/' + body._id, json: true}, function(err, d, b) {
+                if(err) return console.error(err);
+
+                assert.equal(body._id, b._id);
+                assert.equal(body.name, b.name);
+
+                cb(err, d, body);
+            });
+        });
     };
 }
 
@@ -97,12 +105,12 @@ function createResource(r) {
     return function(cb) {
         var name = 'Joe';
 
-        request.post({url: r, json: {name: name}}, function(err, r, body) {
+        request.post({url: r, json: {name: name}}, function(err, d, body) {
             if(err) return console.error(err);
 
             assert.equal(body.name, name);
 
-            cb();
+            cb(err, d, body);
         });
     };
 }
@@ -111,12 +119,12 @@ function createResourceViaGet(r) {
     return function(cb) {
         var name = 'Jack';
 
-        request.get({url: r, qs: {name: name, method: 'post'}, json: true}, function(err, r, body) {
+        request.get({url: r, qs: {name: name, method: 'post'}, json: true}, function(err, d, body) {
             if(err) return console.error(err);
 
             assert.equal(body.name, name);
 
-            cb();
+            cb(err, d, body);
         });
     };
 }
