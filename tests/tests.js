@@ -163,8 +163,19 @@ function updateResource(r) {
 
 function updateResourceViaGet(r) {
     return function(cb) {
-        // TODO
-        cb();
+        createResource(r)(function(err, d, body) {
+            var id = body._id;
+            var name = body.name + body.name;
+
+            request.get({url: r + '/' + id, qs: {name: name, method: 'put'}, json: true}, function(err, d, body) {
+                if(err) return console.error(err);
+
+                assert.equal(id, body._id);
+                assert.equal(name, body.name);
+
+                cb(err, d, body);
+            });
+        });
     };
 }
 
