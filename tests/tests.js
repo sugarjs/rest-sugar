@@ -28,7 +28,7 @@ function main() {
         authors: models.Author
     }, sugar); // TODO: add auth and success cbs
 
-    console.log('Running tests!');
+    start();
     app.listen(port, function(err) {
         if(err) return console.error(err);
 
@@ -48,6 +48,10 @@ function main() {
             });
        });
     });
+}
+
+function start() {
+    console.log('Running tests!');
 }
 
 function finish() {
