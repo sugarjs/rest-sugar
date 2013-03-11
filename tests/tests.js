@@ -21,18 +21,6 @@ function main() {
         authors: models.Author
     }, sugar);
 
-    api.pre(function() {
-        api.use(function(req, res, next) {
-            next();
-        });
-    });
-
-    api.post(function() {
-        api.use(function(data, next) {
-            next();
-        });
-    });
-
     utils.start();
     app.listen(conf.port, function(err) {
         if(err) return console.error(err);
