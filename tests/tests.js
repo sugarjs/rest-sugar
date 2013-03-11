@@ -28,6 +28,7 @@ function main() {
     rest.init(app, prefix, {
         authors: models.Author
     }, sugar, function(err, ok) {
+        // TODO: perhaps treat this as a middleware instead and provide "next"?
         return function(req, res) {
             ok(req, res);
         };
