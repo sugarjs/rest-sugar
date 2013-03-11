@@ -31,7 +31,7 @@ function main() {
         return function(req, res) {
             ok(req, res);
         };
-    }, function(data, res) {
+    }, function(req, res, body) {
 
     });
 
