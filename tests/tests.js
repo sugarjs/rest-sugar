@@ -31,14 +31,13 @@ function main() {
     }, sugar);
 
     api.pre(function() {
-        api.use(function(err, req, res, next) {
-            console.log('at pre middleware');
+        api.use(function(req, res, next) {
             next();
         });
     });
 
     api.post(function() {
-        api.use(function(err, data, next) {
+        api.use(function(data, next) {
             next();
         });
     });
