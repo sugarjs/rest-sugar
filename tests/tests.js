@@ -18,6 +18,7 @@ function main() {
     var prefix = '/api/';
     var resource = host + ':' + port + prefix + 'authors';
     var app = express();
+    var api;
 
     app.configure(function() {
         app.use(express.methodOverride()); // handles PUT
@@ -25,15 +26,22 @@ function main() {
         app.use(app.router);
     });
 
-    rest.init(app, prefix, {
+    api = rest.init(app, prefix, {
         authors: models.Author
-    }, sugar, function(err, ok) {
-        // TODO: perhaps treat this as a middleware instead and provide "next"?
-        return function(req, res) {
-            ok(req, res);
-        };
-    }, function(req, res, body) {
+    }, sugar);
 
+    api.pre(function() {
+        api.use(function(err, req, res, next) {
+            console.log('at pre middleware');
+            next();
+        });
+    });
+
+    api.post(function() {
+        api.use(function(err, req, res, next) {
+            console.log('at post middleware');
+            next();
+        });
     });
 
     start();
