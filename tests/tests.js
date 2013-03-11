@@ -205,13 +205,7 @@ function removeResource(r) {
             request.del({url: r, json: {_id: id}}, function(err, d, body) {
                 if(err) return console.error(err);
 
-                request.get({url: r + '/count', json: true}, function(err, d, body) {
-                    if(err) return console.error(err);
-
-                    assert.equal(body, 0);
-
-                    cb(err, d, body);
-                });
+                assertCount(r, 0, cb);
             });
         });
     };
@@ -225,13 +219,7 @@ function removeResourceViaGet(r) {
             request.get({url: r, qs: {_id: id}, method: 'delete'}, function(err, d, body) {
                 if(err) return console.error(err);
 
-                request.get({url: r + '/count', json: true}, function(err, d, body) {
-                    if(err) return console.error(err);
-
-                    assert.equal(body, 0);
-
-                    cb(err, d, body);
-                });
+                assertCount(r, 0, cb);
             });
         });
     };
@@ -245,16 +233,20 @@ function removeResourceViaId(r) {
             request.del({url: r + '/' + id}, function(err, d, body) {
                 if(err) return console.error(err);
 
-                request.get({url: r + '/count', json: true}, function(err, d, body) {
-                    if(err) return console.error(err);
-
-                    assert.equal(body, 0);
-
-                    cb(err, d, body);
-                });
-            });
+                assertCount(r, 0, cb);
+           });
         });
     };
+}
+
+function assertCount(r, c, cb) {
+    request.get({url: r + '/count', json: true}, function(err, d, body) {
+        if(err) return console.error(err);
+
+        assert.equal(body, c);
+
+        cb(err, d, body);
+    });
 }
 
 function start() {
