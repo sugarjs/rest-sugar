@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var assert = require('assert');
 
+var async = require('async');
 var express = require('express');
 var request = require('request');
 var sugar = require('object-sugar');
@@ -32,22 +33,39 @@ function main() {
     app.listen(port, function(err) {
         if(err) return console.error(err);
 
-        request.get(resource, function(err, d) {
+        async.series([
+            getResource(resource),
+            postResource(resource)
+            // TODO: post with GET and method (assert auth side too)
+        ], finish);
+    });
+}
+
+function getResource(r) {
+    return function(cb) {
+        request.get(r, function(err, d, body) {
             if(err) return console.error(err);
 
-            var name = 'Joe';
+            // TODO: it should not be necessary to parse body here!
+            assert.equal(JSON.parse(body).length, 0);
 
-            assert.equal(JSON.parse(d.body).length, 0);
+            cb();
+        });
+    };
+}
 
-            request.post({url: resource, json: {name: name}}, function(err, r, body) {
-                if(err) return console.error(err);
+function postResource(r) {
+    return function(cb) {
+        var name = 'Joe';
 
-                assert.equal(body.name, name);
+        request.post({url: r, json: {name: name}}, function(err, r, body) {
+            if(err) return console.error(err);
 
-                finish();
-            });
-       });
-    });
+            assert.equal(body.name, name);
+
+            cb();
+        });
+    };
 }
 
 function start() {
