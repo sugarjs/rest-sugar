@@ -27,7 +27,13 @@ function main() {
 
     rest.init(app, prefix, {
         authors: models.Author
-    }, sugar); // TODO: add auth and success cbs
+    }, sugar, function(err, ok) {
+        return function(req, res) {
+            ok(req, res);
+        };
+    }, function(data, res) {
+
+    });
 
     start();
     app.listen(port, function(err) {
