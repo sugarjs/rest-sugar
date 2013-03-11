@@ -38,8 +38,7 @@ function main() {
     });
 
     api.post(function() {
-        api.use(function(err, req, res, next) {
-            console.log('at post middleware');
+        api.use(function(err, data, next) {
             next();
         });
     });

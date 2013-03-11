@@ -5,12 +5,12 @@
     "version": "0.3.1",
 
     "dependencies": {
+        "async": "0.2.6",
         "funkit": "0.7.4",
         "is-js": "0.1.1"
     },
 
     "devDependencies": {
-        "async": "0.2.6",
         "request": "2.14.0",
         "object-sugar": "0.2.0"
     },
