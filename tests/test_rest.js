@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 var assert = require('assert');
 
 var async = require('async');
@@ -12,16 +11,13 @@ var conf = require('./conf');
 var utils = require('./utils');
 
 
-main();
-
-function main() {
+function tests(done) {
     var resource = conf.host + ':' + conf.port + conf.prefix + 'authors';
     var app = serve(conf);
     var api = rest.init(app, conf.prefix, {
         authors: models.Author
     }, sugar);
 
-    utils.start();
     app.listen(conf.port, function(err) {
         if(err) return console.error(err);
 
@@ -37,9 +33,10 @@ function main() {
             removeResource(resource),
             removeResourceViaGet(resource),
             removeResourceViaId(resource)
-        ], removeData), utils.finish);
+        ], removeData), done);
     });
 }
+module.exports = tests;
 
 function removeData(t) {
     return function(cb) {

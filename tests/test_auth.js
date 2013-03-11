@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 var assert = require('assert');
 
 var async = require('async');
@@ -11,9 +10,7 @@ var conf = require('./conf');
 var models = require('./models');
 var utils = require('./utils');
 
-main();
-
-function main() {
+function tests(done) {
     var resource = conf.host + ':' + conf.port + conf.prefix + 'authors';
     var app = serve(conf);
     var api = rest.init(app, conf.prefix, {
@@ -21,19 +18,24 @@ function main() {
     }, sugar);
 
     api.pre(function() {
-        // TODO
+        api.use(function(req, res, next) {
+            next();
+        });
     });
 
     api.post(function() {
-        // TODO
+        api.use(function(data, next) {
+            next();
+        });
     });
 
-    utils.start();
-
-    app.listen(conf.port, function(err) {
+    // TODO: figure out how to spawn servers and close them. alternatively
+    // move this handling to higher level
+    app.listen(conf.port + 1, function(err) {
         if(err) return console.error(err);
 
         // TODO: define some basic tests for auth
-        utils.finish();
+        done();
     });
 }
+module.exports = tests;
