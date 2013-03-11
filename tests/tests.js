@@ -40,12 +40,27 @@ function main() {
     app.listen(port, function(err) {
         if(err) return console.error(err);
 
-        // TODO: empty db before each so these can be treated as idempotent funcs
-        async.series([
+        async.series(setup([
             getResource(resource),
             postResource(resource),
             postResourceViaGet(resource)
-        ], finish);
+        ], function(t) {
+            return function(cb) {
+                async.series([
+                    removeAuthors
+                ], t.bind(undefined, cb));
+            };
+        }), finish);
+    });
+}
+
+function removeAuthors(cb) {
+    sugar.removeAll(models.Author, cb);
+}
+
+function setup(tests, fn) {
+    return tests.map(function(t) {
+        return fn(t);
     });
 }
 
