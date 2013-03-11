@@ -15,6 +15,7 @@ function main() {
     var host = 'http://localhost';
     var port = 3000;
     var prefix = '/api/';
+    var resource = host + ':' + port + prefix + 'authors';
     var app = express();
 
     app.configure(function() {
@@ -31,14 +32,25 @@ function main() {
     app.listen(port, function(err) {
         if(err) return console.error(err);
 
-        request.get(host + ':' + port + prefix + 'authors', function(err, d) {
+        request.get(resource, function(err, d) {
             if(err) return console.error(err);
+
+            var name = 'Joe';
 
             assert.equal(JSON.parse(d.body).length, 0);
 
-            console.log('Tests finished!');
-            process.exit();
-        });
+            request.post({url: resource, json: {name: name}}, function(err, r, body) {
+                if(err) return console.error(err);
 
+                assert.equal(body.name, name);
+
+                finish();
+            });
+       });
     });
+}
+
+function finish() {
+    console.log('Tests finished!');
+    process.exit();
 }
