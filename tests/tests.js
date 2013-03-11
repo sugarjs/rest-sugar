@@ -33,10 +33,11 @@ function main() {
     app.listen(port, function(err) {
         if(err) return console.error(err);
 
+        // TODO: empty db before each so these can be treated as idempotent funcs
         async.series([
             getResource(resource),
-            postResource(resource)
-            // TODO: post with GET and method (assert auth side too)
+            postResource(resource),
+            postResourceViaGet(resource)
         ], finish);
     });
 }
@@ -58,6 +59,20 @@ function postResource(r) {
         var name = 'Joe';
 
         request.post({url: r, json: {name: name}}, function(err, r, body) {
+            if(err) return console.error(err);
+
+            assert.equal(body.name, name);
+
+            cb();
+        });
+    };
+}
+
+function postResourceViaGet(r) {
+    return function(cb) {
+        var name = 'Jack';
+
+        request.get({url: r, qs: {name: name, method: 'post'}, json: true}, function(err, r, body) {
             if(err) return console.error(err);
 
             assert.equal(body.name, name);
