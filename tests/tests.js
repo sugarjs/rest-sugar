@@ -43,11 +43,10 @@ function main() {
 
 function getResource(r) {
     return function(cb) {
-        request.get(r, function(err, d, body) {
+        request.get({url: r, json: true}, function(err, d, body) {
             if(err) return console.error(err);
 
-            // TODO: it should not be necessary to parse body here!
-            assert.equal(JSON.parse(body).length, 0);
+            assert.equal(body.length, 0);
 
             cb();
         });
