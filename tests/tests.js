@@ -2,31 +2,22 @@
 var assert = require('assert');
 
 var async = require('async');
-var express = require('express');
 var request = require('request');
 var sugar = require('object-sugar');
 
 var rest = require('../lib/rest-sugar');
+var serve = require('./serve');
 var models = require('./models');
+var conf = require('./conf');
+var utils = require('./utils');
 
 
 main();
 
 function main() {
-    var host = 'http://localhost';
-    var port = 3000;
-    var prefix = '/api/';
-    var resource = host + ':' + port + prefix + 'authors';
-    var app = express();
-    var api;
-
-    app.configure(function() {
-        app.use(express.methodOverride()); // handles PUT
-        app.use(express.bodyParser()); // handles POST
-        app.use(app.router);
-    });
-
-    api = rest.init(app, prefix, {
+    var resource = conf.host + ':' + conf.port + conf.prefix + 'authors';
+    var app = serve(conf);
+    var api = rest.init(app, conf.prefix, {
         authors: models.Author
     }, sugar);
 
@@ -42,8 +33,8 @@ function main() {
         });
     });
 
-    start();
-    app.listen(port, function(err) {
+    utils.start();
+    app.listen(conf.port, function(err) {
         if(err) return console.error(err);
 
         async.series(setup([
@@ -58,7 +49,7 @@ function main() {
             removeResource(resource),
             removeResourceViaGet(resource),
             removeResourceViaId(resource)
-        ], removeData), finish);
+        ], removeData), utils.finish);
     });
 }
 
@@ -211,7 +202,7 @@ function removeResource(r) {
             request.del({url: r, json: {_id: id}}, function(err, d, body) {
                 if(err) return console.error(err);
 
-                assertCount(r, 0, cb);
+                utils.assertCount(r, 0, cb);
             });
         });
     };
@@ -225,7 +216,7 @@ function removeResourceViaGet(r) {
             request.get({url: r, qs: {_id: id}, method: 'delete'}, function(err, d, body) {
                 if(err) return console.error(err);
 
-                assertCount(r, 0, cb);
+                utils.assertCount(r, 0, cb);
             });
         });
     };
@@ -239,27 +230,8 @@ function removeResourceViaId(r) {
             request.del({url: r + '/' + id}, function(err, d, body) {
                 if(err) return console.error(err);
 
-                assertCount(r, 0, cb);
+                utils.assertCount(r, 0, cb);
            });
         });
     };
-}
-
-function assertCount(r, c, cb) {
-    request.get({url: r + '/count', json: true}, function(err, d, body) {
-        if(err) return console.error(err);
-
-        assert.equal(body, c);
-
-        cb(err, d, body);
-    });
-}
-
-function start() {
-    console.log('Running tests!');
-}
-
-function finish() {
-    console.log('Tests finished!');
-    process.exit();
 }
