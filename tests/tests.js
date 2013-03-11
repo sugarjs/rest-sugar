@@ -131,8 +131,15 @@ function createResourceViaGet(r) {
 
 function createResourceViaId(r) {
     return function(cb) {
-        // TODO
-        cb();
+        createResource(r)(function(err, d, body) {
+            request.post({url: r + '/' + body._id}, function(err, d, body) {
+                if(err) return console.error(err);
+
+                assert.equal(d.statusCode, 403);
+
+                cb(err, d, body);
+            });
+        });
     };
 }
 
