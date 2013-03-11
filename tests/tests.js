@@ -44,14 +44,16 @@ function main() {
             getResource(resource),
             postResource(resource),
             postResourceViaGet(resource)
-        ], function(t) {
-            return function(cb) {
-                async.series([
-                    removeAuthors
-                ], t.bind(undefined, cb));
-            };
-        }), finish);
+        ], removeData), finish);
     });
+}
+
+function removeData(t) {
+    return function(cb) {
+        async.series([
+            removeAuthors
+        ], t.bind(undefined, cb));
+    };
 }
 
 function removeAuthors(cb) {
