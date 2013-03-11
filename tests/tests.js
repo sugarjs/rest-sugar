@@ -42,8 +42,16 @@ function main() {
 
         async.series(setup([
             getResource(resource),
-            postResource(resource),
-            postResourceViaGet(resource)
+            getResourceViaId(resource),
+            createResource(resource),
+            createResourceViaGet(resource),
+            createResourceViaId(resource),
+            updateResource(resource),
+            updateResourceViaGet(resource),
+            updateResourceViaId(resource),
+            removeResource(resource),
+            removeResourceViaGet(resource),
+            removeResourceViaId(resource)
         ], removeData), finish);
     });
 }
@@ -78,7 +86,14 @@ function getResource(r) {
     };
 }
 
-function postResource(r) {
+function getResourceViaId(r) {
+    return function(cb) {
+        // TODO
+        cb();
+    };
+}
+
+function createResource(r) {
     return function(cb) {
         var name = 'Joe';
 
@@ -92,7 +107,7 @@ function postResource(r) {
     };
 }
 
-function postResourceViaGet(r) {
+function createResourceViaGet(r) {
     return function(cb) {
         var name = 'Jack';
 
@@ -103,6 +118,55 @@ function postResourceViaGet(r) {
 
             cb();
         });
+    };
+}
+
+function createResourceViaId(r) {
+    return function(cb) {
+        // TODO
+        cb();
+    };
+}
+
+function updateResource(r) {
+    return function(cb) {
+        // TODO
+        cb();
+    };
+}
+
+function updateResourceViaGet(r) {
+    return function(cb) {
+        // TODO
+        cb();
+    };
+}
+
+function updateResourceViaId(r) {
+    return function(cb) {
+        // TODO
+        cb();
+    };
+}
+
+function removeResource(r) {
+    return function(cb) {
+        // TODO
+        cb();
+    };
+}
+
+function removeResourceViaGet(r) {
+    return function(cb) {
+        // TODO
+        cb();
+    };
+}
+
+function removeResourceViaId(r) {
+    return function(cb) {
+        // TODO
+        cb();
     };
 }
 
