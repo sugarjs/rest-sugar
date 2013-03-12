@@ -52,3 +52,8 @@ function removeData(t) {
 function removeAuthors(cb) {
     sugar.removeAll(models.Author, cb);
 }
+
+function forbidden(err, d, body) {
+    assert(d.statusCode, 401);
+}
+exports.forbidden = forbidden;

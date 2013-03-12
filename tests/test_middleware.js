@@ -1,5 +1,3 @@
-var assert = require('assert');
-
 var async = require('async');
 var request = require('request');
 var sugar = require('object-sugar');
@@ -40,9 +38,7 @@ function tests(done) {
 
         utils.runTests([
             queries.get(resource),
-            queries.create(resource, function(err, d, body) {
-                assert(d.statusCode, 401);
-            })
+            queries.create(resource, utils.forbidden)
         ], done);
     });
 }
