@@ -38,7 +38,8 @@ function tests(done) {
 
         utils.runTests([
             queries.get(resource),
-            queries.create(resource, utils.forbidden)
+            queries.create(resource, utils.forbidden),
+            queries.createViaGet(resource, utils.forbidden)
         ], done);
     });
 }

@@ -51,14 +51,15 @@ function create(r, check) {
 }
 exports.create = create;
 
-function createViaGet(r) {
+function createViaGet(r, check) {
     return function(cb) {
         var name = 'Jack';
 
         request.get({url: r, qs: {name: name, method: 'post'}, json: true}, function(err, d, body)   {
             if(err) return console.error(err);
 
-            assert.equal(body.name, name);
+            if(check) check(err, d, body);
+            else assert.equal(body.name, name);
 
             cb(err, d, body);
         });
