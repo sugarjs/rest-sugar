@@ -25,6 +25,14 @@ function tests(done) {
         });
     });
 
+    api.post(function() {
+        api.use(function(req, res, next) {
+            assert.ok(!req.query.method);
+
+            next();
+        });
+    });
+
     app.listen(conf.port, function(err) {
         if(err) return console.error(err);
 

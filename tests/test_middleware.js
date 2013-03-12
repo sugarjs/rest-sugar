@@ -39,7 +39,7 @@ function tests(done) {
     });
 
     api.post(function() {
-        api.use(function(data, next) {
+        api.use(function(req, res, next, data) {
             postTriggered = true;
 
             next();
