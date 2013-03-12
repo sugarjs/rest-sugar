@@ -11,7 +11,8 @@ var models = require('./models');
 var utils = require('./utils');
 
 function tests(done) {
-    var resource = conf.host + ':' + conf.port + conf.prefix + 'authors';
+    var port = conf.port + 1;
+    var resource = conf.host + ':' + port + conf.prefix + 'authors';
     var app = serve(conf);
     var api = rest.init(app, conf.prefix, {
         authors: models.Author
@@ -32,7 +33,7 @@ function tests(done) {
 
     // TODO: figure out how to spawn servers and close them. alternatively
     // move this handling to higher level
-    app.listen(conf.port + 1, function(err) {
+    app.listen(port, function(err) {
         if(err) return console.error(err);
 
         // TODO: define some basic tests for auth

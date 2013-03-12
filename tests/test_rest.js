@@ -1,4 +1,3 @@
-var async = require('async');
 var sugar = require('object-sugar');
 
 var rest = require('../lib/rest-sugar');
@@ -19,7 +18,7 @@ function tests(done) {
     app.listen(conf.port, function(err) {
         if(err) return console.error(err);
 
-        async.series(setup([
+        utils.runTests([
             queries.get(resource),
             queries.getViaId(resource),
             queries.create(resource),
@@ -31,28 +30,7 @@ function tests(done) {
             queries.remove(resource),
             queries.removeViaGet(resource),
             queries.removeViaId(resource)
-        ], removeData), done);
+        ], done);
     });
 }
 module.exports = tests;
-
-// TODO: move to utils?
-function setup(tests, fn) {
-    return tests.map(function(t) {
-        return fn(t);
-    });
-}
-
-// TODO: move to utils?
-function removeData(t) {
-    return function(cb) {
-        async.series([
-            removeAuthors
-        ], t.bind(undefined, cb));
-    };
-}
-
-// TODO: move to utils? (make generic remove)
-function removeAuthors(cb) {
-    sugar.removeAll(models.Author, cb);
-}
