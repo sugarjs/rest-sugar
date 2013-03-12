@@ -9,6 +9,8 @@ var serve = require('./serve');
 var conf = require('./conf');
 var models = require('./models');
 var utils = require('./utils');
+var queries = require('./queries');
+
 
 function tests(done) {
     var port = conf.port + 1;
@@ -36,8 +38,12 @@ function tests(done) {
     app.listen(port, function(err) {
         if(err) return console.error(err);
 
-        // TODO: define some basic tests for auth
-        done();
+        utils.runTests([
+            queries.get(resource),
+            queries.create(resource, function(err, d, body) {
+                assert(d.statusCode, 401);
+            })
+        ], done);
     });
 }
 module.exports = tests;

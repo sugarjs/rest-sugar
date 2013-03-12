@@ -35,14 +35,15 @@ function getViaId(r) {
 }
 exports.getViaId = getViaId;
 
-function create(r) {
+function create(r, check) {
     return function(cb) {
         var name = 'Joe';
 
         request.post({url: r, json: {name: name}}, function(err, d, body) {
             if(err) return console.error(err);
 
-            assert.equal(body.name, name);
+            if(check) check(err, d, body);
+            else assert.equal(body.name, name);
 
             cb(err, d, body);
         });
