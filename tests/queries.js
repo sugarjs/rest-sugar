@@ -9,7 +9,25 @@ var utils = require('./utils');
 // TODO: tidy up and make the API consistent
 
 
+function getMeta(r, extra, check) {
+    extra = extra || {};
+
+    return function(cb) {
+        request.get({url: r, json: true, qs: extra}, function(err, d, body) {
+            if(err) return console.error(err);
+
+            if(check) check(err, d, body);
+            else assert.ok(body);
+
+            cb(err, d, body);
+        });
+    };
+}
+exports.getMeta = getMeta;
+
 function get(r, extra, check) {
+    extra = extra || {};
+
     return function(cb) {
         request.get({url: r, json: true, qs: extra}, function(err, d, body) {
             if(err) return console.error(err);

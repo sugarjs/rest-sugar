@@ -11,7 +11,8 @@ var queries = require('./queries');
 
 
 function tests(done) {
-    var resource = conf.host + ':' + conf.port + conf.prefix + 'authors';
+    var apiRoot = conf.host + ':' + conf.port + conf.prefix;
+    var resource = apiRoot + 'authors';
     var app = serve(conf);
     var api = rest.init(app, conf.prefix, {
         authors: models.Author
@@ -37,6 +38,7 @@ function tests(done) {
         if(err) return console.error(err);
 
         utils.runTests([
+            queries.getMeta(apiRoot),
             queries.get(resource),
             queries.getViaId(resource),
             queries.create(resource),
