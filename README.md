@@ -2,22 +2,16 @@
 
 The whole point of this library is to make it easy to implement simple
 yet powerful REST APIs. There are a few extension points you can hook
-into. mongoose-sugar complements this particular library very well.
-It is possible to implement similar solutions for other backends too.
+into. [mongoose-sugar](https://github.com/bebraw/mongoose-sugar)
+complements this particular library very well. It is possible to implement
+similar solutions for other backends too as long as you stick to the
+[sugar-spec](https://github.com/bebraw/sugar-spec).
 
 Even though the library has been designed based on Express, it might be
 possible to make it work with other similar libraries too given they use
 Express conventions. This might take some kind of an adapter.
 
-See the demos to see how the architecture works out. Note that as it does
-not use mongoose-sugar it is a bit lengthy. It should give you some idea
-how to implement components that fit the whole, though.
-
-Inspired by [RESTful API Design - Second
-Edition](http://www.slideshare.net/apigee/restful-api-design-second-edition)
-and [django-tastypie](https://github.com/toastdriven/django-tastypie).
-
-## Features
+## Basic Schema
 
 The following urls contain a prefix given at init.
 
@@ -44,11 +38,43 @@ urls operate on a specific resource (ie. /&lt;api&gt;/&lt;id&gt;).
 It is possible to emulate POST, PUT and DELETE via GET by using a query (ie.
 method=post).
 
-In case you want to use some authentication method (preferable!), you may
-provide a custom auth handler for the init. It wraps each call in the API
-except for the metadata one. It's signature is auth(fn) meaning you are
-supposed to call fn in case auth has been made properly. The default
-implementation just passes everything through.
+## Middleware
+
+In case you want to use some authentication method (preferable!) or
+customize the behavior further, consider using middlewares. You may attach
+both `pre` and `post` middleware handlers. `pre` ones are performed before an
+actual database query performed whereas `post` ones are after. The basic syntax
+resembles Express. See the example below:
+
+```js
+...
+
+var api = rest.init(app, '/api/v1', {
+    authors: models.Author
+}, sugar);
+
+api.pre(function() {
+    api.use(rest.only('GET'));
+    api.use(rest.keyAuth({name: 'apikey', value: 'secret'}));
+    api.use(function(req, res, next) {
+        // do your magic now
+
+        next(); // call or else...
+    });
+});
+
+// api.post is identical except the functions get an extra parameter containing
+// the data fetched from the database. You may then use that data to trigger
+// further actions for instance
+```
+
+Examine the tests included with the project for more complete examples.
+
+## Acknowledgments
+
+Inspired by [RESTful API Design - Second
+Edition](http://www.slideshare.net/apigee/restful-api-design-second-edition)
+and [django-tastypie](https://github.com/toastdriven/django-tastypie).
 
 ## License
 
