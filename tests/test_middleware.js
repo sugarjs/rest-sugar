@@ -1,3 +1,5 @@
+var assert = require('assert');
+
 var async = require('async');
 var request = require('request');
 var sugar = require('object-sugar');
@@ -17,16 +19,21 @@ function tests(done) {
     var api = rest.init(app, conf.prefix, {
         authors: models.Author
     }, sugar);
+    var preTriggered, postTriggered;
 
     api.pre(function() {
         api.use(rest.only('GET'));
         api.use(function(req, res, next) {
+            preTriggered = true;
+
             next();
         });
     });
 
     api.post(function() {
         api.use(function(data, next) {
+            postTriggered = true;
+
             next();
         });
     });
@@ -40,7 +47,12 @@ function tests(done) {
             queries.get(resource),
             queries.create(resource, utils.forbidden),
             queries.createViaGet(resource, utils.forbidden)
-        ], done);
+        ], function() {
+            assert.ok(preTriggered);
+            assert.ok(postTriggered);
+
+            done();
+        });
     });
 }
 module.exports = tests;
