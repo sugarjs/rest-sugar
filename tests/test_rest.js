@@ -1,3 +1,5 @@
+var assert = require('assert');
+
 var sugar = require('object-sugar');
 
 var rest = require('../lib/rest-sugar');
@@ -14,6 +16,14 @@ function tests(done) {
     var api = rest.init(app, conf.prefix, {
         authors: models.Author
     }, sugar);
+
+    api.pre(function() {
+        api.use(function(req, res, next) {
+            assert.ok(['POST', 'GET', 'DELETE', 'PUT'].indexOf(req.method) >= 0);
+
+            next();
+        });
+    });
 
     app.listen(conf.port, function(err) {
         if(err) return console.error(err);
