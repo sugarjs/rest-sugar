@@ -2,15 +2,25 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var sugar = require('mongoose-sugar');
+
 var rest = require('../../lib/rest-sugar');
 var models = require('./models');
+
 
 main();
 
 function main() {
-    mongoose.connect('mongodb://localhost/mongoosedemo');
+    mongoose.connect('mongodb://localhost/mongoosedemo', function(err) {
+        if(err) return console.error(err, 'Remember to run mongod!');
 
-    var app = express.createServer();
+        serve();
+    });
+}
+
+function serve() {
+    var port = 8000;
+    var prefix = '/api/v1';
+    var app = express();
 
     app.configure(function() {
         app.use(express.methodOverride()); // handles PUT
@@ -18,12 +28,15 @@ function main() {
         app.use(app.router);
     });
 
-    rest.init(app, '/api/v1/', {
+    var api = rest.init(app, '/api/v1/', {
         'libraries': models.Library,
         'tags': models.Tag
     }, sugar);
 
-    console.log('Surf to localhost:8000');
-    app.listen(8000);
+    app.listen(port, function(err) {
+        if(err) return console.error(err);
+
+        console.log('Surf to localhost:' + port + prefix);
+    });
 }
 
