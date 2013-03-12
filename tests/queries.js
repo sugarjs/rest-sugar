@@ -2,16 +2,20 @@ var assert = require('assert');
 
 var request = require('request');
 var sugar = require('object-sugar');
+var merge = require('funkit').common.merge;
 
 var utils = require('./utils');
 
+// TODO: tidy up and make the API consistent
 
-function get(r) {
+
+function get(r, extra, check) {
     return function(cb) {
-        request.get({url: r, json: true}, function(err, d, body) {
+        request.get({url: r, json: true, qs: extra}, function(err, d, body) {
             if(err) return console.error(err);
 
-            assert.equal(body.length, 0);
+            if(check) check(err, d, body);
+            else assert.equal(body.length, 0);
 
             cb(err, d, body);
         });
@@ -35,11 +39,13 @@ function getViaId(r) {
 }
 exports.getViaId = getViaId;
 
-function create(r, check) {
+function create(r, extra, check) {
+    extra = extra || {};
+
     return function(cb) {
         var name = 'Joe';
 
-        request.post({url: r, json: {name: name}}, function(err, d, body) {
+        request.post({url: r, json: merge({name: name}, extra)}, function(err, d, body) {
             if(err) return console.error(err);
 
             if(check) check(err, d, body);
@@ -51,11 +57,13 @@ function create(r, check) {
 }
 exports.create = create;
 
-function createViaGet(r, check) {
+function createViaGet(r, extra, check) {
+    extra = extra || {};
+
     return function(cb) {
         var name = 'Jack';
 
-        request.get({url: r, qs: {name: name, method: 'post'}, json: true}, function(err, d, body)   {
+        request.get({url: r, qs: merge({name: name, method: 'post'}, extra), json: true}, function(err, d, body)   {
             if(err) return console.error(err);
 
             if(check) check(err, d, body);

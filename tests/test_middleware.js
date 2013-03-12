@@ -19,10 +19,18 @@ function tests(done) {
     var api = rest.init(app, conf.prefix, {
         authors: models.Author
     }, sugar);
+    var auth = {
+        name: 'apikey',
+        value: 'secret'
+    };
+    var authQuery = {};
     var preTriggered, postTriggered;
+
+    authQuery[auth.name] = auth.value;
 
     api.pre(function() {
         api.use(rest.only('GET'));
+        api.use(rest.keyAuth(auth));
         api.use(function(req, res, next) {
             preTriggered = true;
 
@@ -44,9 +52,10 @@ function tests(done) {
         if(err) return console.error(err);
 
         utils.runTests([
-            queries.get(resource),
-            queries.create(resource, utils.forbidden),
-            queries.createViaGet(resource, utils.forbidden)
+            queries.get(resource, {}, utils.forbidden),
+            queries.get(resource, authQuery),
+            queries.create(resource, authQuery, utils.forbidden),
+            queries.createViaGet(resource, authQuery, utils.forbidden)
         ], function() {
             assert.ok(preTriggered);
             assert.ok(postTriggered);
