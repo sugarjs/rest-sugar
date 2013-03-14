@@ -29,7 +29,8 @@ function tests(done) {
     authQuery[auth.name] = auth.value;
 
     api.pre(function() {
-        api.use(rest.only('GET'));
+        //api.use(rest.only('GET'));
+        api.use(rest.allow(['GET']));
         api.use(rest.keyAuth(auth));
         api.use(function(req, res, next) {
             preTriggered = true;
