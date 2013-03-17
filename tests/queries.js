@@ -75,24 +75,6 @@ function create(r, extra, check) {
 }
 exports.create = create;
 
-function createViaGet(r, extra, check) {
-    extra = extra || {};
-
-    return function(cb) {
-        var name = 'Jack';
-
-        request.get({url: r, qs: merge({name: name, method: 'post'}, extra), json: true}, function(err, d, body)   {
-            if(err) return console.error(err);
-
-            if(check) check(err, d, body);
-            else assert.equal(body.name, name);
-
-            cb(err, d, body);
-        });
-    };
-}
-exports.createViaGet = createViaGet;
-
 function createViaId(r) {
     return function(cb) {
         create(r)(function(err, d, body) {
@@ -127,25 +109,6 @@ function update(r) {
 }
 exports.update = update;
 
-function updateViaGet(r) {
-    return function(cb) {
-        create(r)(function(err, d, body) {
-            var id = body._id;
-            var name = body.name + body.name;
-
-            request.get({url: r, qs: {_id: id, name: name, method: 'put'}, json: true}, function(err, d, body) {
-                if(err) return console.error(err);
-
-                assert.equal(id, body._id);
-                assert.equal(name, body.name);
-
-                cb(err, d, body);
-            });
-        });
-    };
-}
-exports.updateViaGet = updateViaGet;
-
 function updateViaId(r) {
     return function(cb) {
         create(r)(function(err, d, body) {
@@ -179,21 +142,6 @@ function remove(r) {
     };
 }
 exports.remove = remove;
-
-function removeViaGet(r) {
-    return function(cb) {
-        create(r)(function(err, d, body) {
-            var id = body._id;
-
-            request.get({url: r, qs: {_id: id}, method: 'delete'}, function(err, d, body) {
-                if(err) return console.error(err);
-
-                utils.assertCount(r, 0, cb);
-            });
-        });
-    };
-}
-exports.removeViaGet = removeViaGet;
 
 function removeViaId(r) {
     return function(cb) {

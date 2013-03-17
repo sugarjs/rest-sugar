@@ -55,8 +55,7 @@ function tests(done) {
         utils.runTests([
             queries.get(resource, {}, utils.forbidden),
             queries.get(resource, authQuery),
-            queries.create(resource, authQuery, utils.forbidden),
-            queries.createViaGet(resource, authQuery, utils.forbidden)
+            queries.create(resource, authQuery, utils.forbidden)
         ], function() {
             assert.ok(preTriggered);
             assert.ok(postTriggered);

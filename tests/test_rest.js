@@ -42,13 +42,10 @@ function tests(done) {
             queries.get(resource),
             queries.getViaId(resource),
             queries.create(resource),
-            queries.createViaGet(resource),
             queries.createViaId(resource),
             queries.update(resource),
-            queries.updateViaGet(resource),
             queries.updateViaId(resource),
             queries.remove(resource),
-            queries.removeViaGet(resource),
             queries.removeViaId(resource)
         ], done);
     });

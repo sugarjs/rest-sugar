@@ -35,9 +35,6 @@ urls operate on a specific resource (ie. /&lt;api&gt;/&lt;id&gt;).
 * DELETE /&lt;api&gt;/&lt;id&gt; -&gt; Deletes the given resource. Returns an empty structure
   if successful.
 
-It is possible to emulate POST, PUT and DELETE via GET by using a query (ie.
-method=post).
-
 ## Middleware
 
 In case you want to use some authentication method (preferable!) or
