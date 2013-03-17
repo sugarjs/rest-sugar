@@ -2,7 +2,7 @@ var assert = require('assert');
 
 var sugar = require('object-sugar');
 
-var rest = require('../lib/rest-sugar');
+var rest = require('../rest-sugar');
 var serve = require('./serve');
 var models = require('./models');
 var conf = require('./conf');

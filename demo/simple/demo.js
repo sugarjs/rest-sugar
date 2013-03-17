@@ -2,7 +2,7 @@
 var express = require('express');
 var sugar = require('object-sugar');
 
-var rest = require('../../lib/rest-sugar');
+var rest = require('../../rest-sugar');
 var models = require('./models');
 
 
@@ -26,7 +26,7 @@ function main() {
     }, sugar);
 
     api.pre(function() {
-        api.use(rest.keyAuth(auth));
+        api.use(rest.middleware.keyAuth(auth));
     });
 
     app.listen(port, function(err) {

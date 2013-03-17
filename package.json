@@ -15,7 +15,7 @@
         "object-sugar": "0.2.1"
     },
 
-    "main": "./lib/rest-sugar.js",
+    "main": "./rest-sugar",
 
     "repository": {
         "type": "git",

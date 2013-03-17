@@ -3,7 +3,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var sugar = require('mongoose-sugar');
 
-var rest = require('../../lib/rest-sugar');
+var rest = require('../../rest-sugar');
 var models = require('./models');
 
 
