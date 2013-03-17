@@ -35,7 +35,6 @@ function init(app, prefix, apis, queries) {
 
     return {
         use: function(fn) {
-
             handlers[context].push(fn);
         },
         pre: function(fn) {
