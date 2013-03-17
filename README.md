@@ -51,8 +51,8 @@ var api = rest(app, '/api/v1', {
 }, sugar);
 
 api.pre(function() {
-    api.use(rest.middleware.only('GET'));
-    api.use(rest.middleware.keyAuth({name: 'apikey', value: 'secret'}));
+    api.use(rest.only('GET'));
+    api.use(rest.keyAuth({name: 'apikey', value: 'secret'}));
     api.use(function(req, res, next) {
         // do your magic now
 
