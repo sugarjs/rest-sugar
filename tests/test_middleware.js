@@ -5,7 +5,6 @@ var request = require('request');
 var sugar = require('object-sugar');
 
 var rest = require('../rest-sugar');
-var middleware = rest.middleware;
 
 var serve = require('./serve');
 var conf = require('./conf');
@@ -18,7 +17,7 @@ function tests(done) {
     var port = conf.port + 1;
     var resource = conf.host + ':' + port + conf.prefix + 'authors';
     var app = serve(conf);
-    var api = rest.init(app, conf.prefix, {
+    var api = rest(app, conf.prefix, {
         authors: models.Author
     }, sugar);
     var auth = {
@@ -32,8 +31,8 @@ function tests(done) {
 
     api.pre(function() {
         //api.use(rest.only('GET'));
-        api.use(middleware.allow(['GET']));
-        api.use(middleware.keyAuth(auth));
+        api.use(rest.allow(['GET']));
+        api.use(rest.keyAuth(auth));
         api.use(function(req, res, next) {
             preTriggered = true;
 

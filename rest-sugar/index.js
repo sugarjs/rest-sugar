@@ -1,2 +1,4 @@
 module.exports = require('./core');
-module.exports.middleware = require('./middleware');
+
+var middleware = require('./middleware');
+for(var name in middleware) module.exports[name] = middleware[name];

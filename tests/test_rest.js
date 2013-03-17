@@ -14,7 +14,7 @@ function tests(done) {
     var apiRoot = conf.host + ':' + conf.port + conf.prefix;
     var resource = apiRoot + 'authors';
     var app = serve(conf);
-    var api = rest.init(app, conf.prefix, {
+    var api = rest(app, conf.prefix, {
         authors: models.Author
     }, sugar);
 

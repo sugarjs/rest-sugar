@@ -20,13 +20,13 @@ function main() {
         app.use(app.router);
     });
 
-    var api = rest.init(app, prefix, {
+    var api = rest(app, prefix, {
         'libraries': models.Library,
         'tags': models.Tag
     }, sugar);
 
     api.pre(function() {
-        api.use(rest.middleware.keyAuth(auth));
+        api.use(rest.keyAuth(auth));
     });
 
     app.listen(port, function(err) {

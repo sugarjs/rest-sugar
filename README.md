@@ -46,7 +46,7 @@ resembles Express. See the example below:
 ```js
 ...
 
-var api = rest.init(app, '/api/v1', {
+var api = rest(app, '/api/v1', {
     authors: models.Author
 }, sugar);
 

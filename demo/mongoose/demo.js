@@ -28,7 +28,7 @@ function serve() {
         app.use(app.router);
     });
 
-    var api = rest.init(app, '/api/v1/', {
+    var api = rest(app, '/api/v1/', {
         'libraries': models.Library,
         'tags': models.Tag
     }, sugar);

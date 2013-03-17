@@ -48,7 +48,7 @@ function init(app, prefix, apis, queries) {
         }
     };
 }
-exports.init = init;
+module.exports = init;
 
 function initAPI(app, prefix, resource, model, queries, handlers) {
     var operator = operate.bind(undefined, handlers.post);
