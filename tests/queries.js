@@ -33,7 +33,7 @@ function get(r, extra, check) {
             if(err) return console.error(err);
 
             if(check) check(err, d, body);
-            else assert.equal(body.length, 0);
+            else assert.equal(Object.keys(body).length, 0);
 
             cb(err, d, body);
         });

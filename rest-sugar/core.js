@@ -120,23 +120,27 @@ function initHandler(resource, preHandlers, fn) {
 }
 
 function operate(postHandlers, req, res) {
-    return function(err, d) {
+    return function(err, data) {
         if(err) {
             res.status(400);
             res.json(err);
+
             return;
         }
+        if(is.array(data)) data = {};
 
-        evaluateHandlers(postHandlers, req, res, function() {
-            res.json(d);
-        }, d);
+        evaluateHandlers(postHandlers, req, res, function(err, d) {
+            res.json(data);
+        }, data);
     };
 }
 
 function evaluateHandlers(handlers, req, res, done, data) {
     async.series(handlers.map(function(fn) {
         return function(cb) {
-            fn(req, res, cb, data);
+            fn(req, res, function(err) {
+                cb(err, data);
+            }, data);
         };
     }), done);
 }

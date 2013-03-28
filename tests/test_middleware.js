@@ -44,6 +44,9 @@ function tests(done) {
         api.use(function(req, res, next, data) {
             postTriggered = true;
 
+            // it should be possible to inject data to result
+            data.test = 'test';
+
             next();
         });
     });
@@ -55,7 +58,9 @@ function tests(done) {
 
         utils.runTests([
             queries.get(resource, {}, utils.forbidden),
-            queries.get(resource, authQuery),
+            queries.get(resource, authQuery, function(err, d, body) {
+                assert.equal(body.test, 'test');
+            }),
             queries.create(resource, authQuery, utils.forbidden)
         ], function() {
             assert.ok(preTriggered);
