@@ -2,7 +2,7 @@
     "name": "rest-sugar",
     "description": "rest-sugar makes it easy to implement yummy REST APIs",
     "author": "Juho Vepsalainen <bebraw@gmail.com>",
-    "version": "0.6.1",
+    "version": "0.6.2",
 
     "dependencies": {
         "async": "0.2.6",
