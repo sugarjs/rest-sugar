@@ -127,9 +127,8 @@ function operate(postHandlers, req, res) {
 
             return;
         }
-        if(is.array(data)) data = {};
 
-        evaluateHandlers(postHandlers, req, res, function(err, d) {
+        evaluateHandlers(postHandlers, req, res, function() {
             res.json(data);
         }, data);
     };

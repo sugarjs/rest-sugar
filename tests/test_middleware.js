@@ -45,7 +45,7 @@ function tests(done) {
             postTriggered = true;
 
             // it should be possible to inject data to result
-            data.test = 'test';
+            data.push({test: 'test'});
 
             next();
         });
@@ -59,7 +59,7 @@ function tests(done) {
         utils.runTests([
             queries.get(resource, {}, utils.forbidden),
             queries.get(resource, authQuery, function(err, d, body) {
-                assert.equal(body.test, 'test');
+                assert.equal(body[0].test, 'test');
             }),
             queries.create(resource, authQuery, utils.forbidden)
         ], function() {
