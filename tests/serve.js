@@ -6,7 +6,11 @@ function serve(conf) {
 
     app.configure(function() {
         app.use(express.methodOverride()); // handles PUT
-        app.use(express.bodyParser()); // handles POST
+
+        // handles POST
+        app.use(express.json());
+        app.use(express.urlencoded());
+
         app.use(app.router);
     });
 
