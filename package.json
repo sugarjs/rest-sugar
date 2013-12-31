@@ -5,12 +5,14 @@
   "version": "0.6.3",
   "dependencies": {
     "async": "0.2.9",
-    "funkit": "0.7.8",
-    "is-js": "0.1.1"
+    "annostring": "~0.2.2",
+    "annois": "~0.3.0",
+    "annozip": "~0.2.1"
   },
   "devDependencies": {
     "request": "2.30.0",
-    "object-sugar": "0.7.1"
+    "object-sugar": "0.7.1",
+    "annofp": "~0.2.1"
   },
   "main": "./lib",
   "repository": {

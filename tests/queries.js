@@ -2,7 +2,7 @@ var assert = require('assert');
 
 var request = require('request');
 var sugar = require('object-sugar');
-var merge = require('funkit').common.merge;
+var merge = require('annofp').merge;
 
 var utils = require('./utils');
 
