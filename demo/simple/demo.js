@@ -2,7 +2,7 @@
 var express = require('express');
 var sugar = require('object-sugar');
 
-var rest = require('../../rest-sugar');
+var rest = require('../../');
 var models = require('./models');
 
 

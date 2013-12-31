@@ -4,7 +4,7 @@ var async = require('async');
 var request = require('request');
 var sugar = require('object-sugar');
 
-var rest = require('../rest-sugar');
+var rest = require('../');
 
 var serve = require('./serve');
 var conf = require('./conf');
